@@ -8,7 +8,7 @@
 		<setting name="console_application" value="true"/>
 		<precompile name="base_pre" location="$ISE_PRECOMP\base.ecf"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
-		<library name="eiffel_math_gl" location="\home\louis\prog\eiffel_math_gl\Library\eiffel_math_gl.ecf"/>
+		<library name="eiffel_math_gl" location="..\Library\eiffel_math_gl.ecf"/>
 		<cluster name="math_gl_ex" location=".\" recursive="true">
 			<file_rule>
 				<exclude>/EIFGENs$</exclude>
