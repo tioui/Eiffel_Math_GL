@@ -2,13 +2,13 @@
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-10-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-10-0 http://www.eiffel.com/developers/xml/configuration-1-10-0.xsd" name="math_gl_ex" uuid="9901B460-138C-4C84-91C2-1F4E06E5D834">
 	<target name="math_gl_ex">
 		<root class="APPLICATION" feature="make"/>
-		<option warning="true" is_attached_by_default="false" syntax="transitional">
+		<option warning="true" is_attached_by_default="false" void_safety="none" syntax="transitional">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
 		<setting name="console_application" value="true"/>
 		<precompile name="base_pre" location="$ISE_PRECOMP\base.ecf"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
-		<library name="eiffel_math_gl" location="..\Library\eiffel_math_gl.ecf"/>
+		<library name="eiffel_math_gl" location="..\Library\eiffel_math_gl.ecf" readonly="false"/>
 		<cluster name="math_gl_ex" location=".\" recursive="true">
 			<file_rule>
 				<exclude>/EIFGENs$</exclude>

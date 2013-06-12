@@ -1,53 +1,55 @@
 note
-	description: "Summary description for {MGL_AXIS}."
+	description: "Summary description for {MGL_AXIS_3D}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
-deferred class
-	MGL_AXIS
+class
+	MGL_AXIS_3D
 
 inherit
-	MGL_ERROR_HELPER
+	MGL_AXIS_HELPER
+
+create {MGL_GRAPH_3D}
+	make
 
 feature {NONE} -- Initialisation
 
 	make(a_graph_pointer:POINTER)
 		do
 			c_graph_pointer:=a_graph_pointer
-			disable_box
-			put_label_outside
+			put_ticks_label_outside
 			enable_label
 			enable_tick_rotation_on_vertical_axis
 			set_axis_order(['x','y','z'])
 			create arrow
+			set_ticks_label_size(0.0)
 			set_origin (0.0, 0.0, 0.0)
+			create grid_pen
 		end
 
 feature -- Access
 
-	has_box:BOOLEAN
 
-	enable_box
+	ticks_label_size:REAL_64 assign set_ticks_label_size
+
+	set_ticks_label_size(a_size: like ticks_label_size)
+		require
+			a_Size_Not_Negative: a_size>=0
 		do
-			has_box:=true
+			ticks_label_size:=a_size
 		end
 
-	disable_box
+	has_ticks_label_inside:BOOLEAN
+
+	put_ticks_label_inside
 		do
-			has_box:=false
+			has_ticks_label_inside:=true
 		end
 
-	has_label_inside:BOOLEAN
-
-	put_label_inside
+	put_ticks_label_outside
 		do
-			has_label_inside:=true
-		end
-
-	put_label_outside
-		do
-			has_label_inside:=false
+			has_ticks_label_inside:=false
 		end
 
 	has_tick_label:BOOLEAN
@@ -86,46 +88,44 @@ feature -- Access
 			axis_order:=a_axis_order
 		end
 
-	arrow:attached MGL_AXIS_ARROW
-
 	origin:attached TUPLE[x,y,z:REAL_64]
 
 	set_origin(a_x,a_y,a_z:REAL_64)
 		do
 			origin:=[a_x,a_y,a_z]
+			clear_error
+			{MGL_EXTERNAL}.mgl_set_origin(c_graph_pointer,origin.x,origin.y,origin.z)
+			valid_error
 		end
+
+	arrow:attached MGL_AXIS_ARROW
 
 	draw
 		local
 			l_opt:STRING
 			l_c_dir,l_c_opt,l_c_stl:C_STRING
 		do
-			clear_error
-			{MGL_EXTERNAL}.mgl_set_origin(c_graph_pointer,origin.x,origin.y,origin.z)
-			valid_error
-			if has_box then
-				clear_error
-				{MGL_EXTERNAL}.mgl_box(c_graph_pointer)
-				valid_error
-			else
-				l_opt:=get_axis_order_string
-				if has_label_inside then
-					l_opt.to_upper
-				end
-				if not has_tick_label then
-					l_opt:=l_opt+"_"
-				end
-				if not is_tick_label_rotated_on_vertical_axis then
-					l_opt:=l_opt+"U"
-				end
-				l_opt:=l_opt+arrow.internal_string
-				create l_c_dir.make (l_opt)
-				create l_c_stl.make ("")
-				create l_c_opt.make ("")
-				clear_error
-				{MGL_EXTERNAL}.mgl_axis(c_graph_pointer,l_c_dir.item,l_c_stl.item,l_c_opt.item)
-				valid_error
+			l_opt:=get_axis_order_string
+			if has_ticks_label_inside then
+				l_opt.to_upper
 			end
+			if not has_tick_label then
+				l_opt:=l_opt+"_"
+			end
+			if not is_tick_label_rotated_on_vertical_axis then
+				l_opt:=l_opt+"U"
+			end
+			l_opt:=l_opt+arrow.internal_string
+			create l_c_dir.make (l_opt)
+			create l_c_stl.make ("")
+			if ticks_label_size > 0.0 then
+				create l_c_opt.make ("size "+ticks_label_size.out)
+			else
+				create l_c_opt.make ("")
+			end
+			clear_error
+			{MGL_EXTERNAL}.mgl_axis(c_graph_pointer,l_c_dir.item,l_c_stl.item,l_c_opt.item)
+			valid_error
 		end
 
 feature {NONE} -- Implementation

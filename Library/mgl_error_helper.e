@@ -127,4 +127,8 @@ feature {NONE} -- Implementation
 				check False end
 			end
 		end
+
+invariant
+	C_Pointer_Is_Not_Null: not c_graph_pointer.is_default_pointer
+	
 end

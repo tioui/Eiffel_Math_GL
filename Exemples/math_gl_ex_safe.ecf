@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-10-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-10-0 http://www.eiffel.com/developers/xml/configuration-1-10-0.xsd" name="math_gl_ex_safe" uuid="E7BD3E71-6A3F-40B9-A03F-710B3DEEA0B2">
+	<target name="math_gl_ex_safe">
+		<root class="APPLICATION" feature="make"/>
+		<option warning="true" is_attached_by_default="false" void_safety="all" syntax="transitional">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<precompile name="base-safe_precompile" location="\home\louis\.es\eiffel_user_files\7.2\precomp\spec\linux-x86-64\base-safe.ecf"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
+		<library name="eiffel_math_gl-safe" location="..\Library\eiffel_math_gl-safe.ecf" readonly="false"/>
+		<cluster name="math_gl_ex_safe" location=".\" recursive="true">
+			<file_rule>
+				<exclude>/EIFGENs$</exclude>
+				<exclude>/CVS$</exclude>
+				<exclude>/.svn$</exclude>
+			</file_rule>
+		</cluster>
+	</target>
+</system>

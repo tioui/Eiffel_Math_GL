@@ -52,11 +52,11 @@ feature -- Function mgl_cf.h
 			"mgl_write_frame"
 		end
 
-	frozen mgl_box(gr:POINTER)
+	frozen mgl_box_str(gr, col:POINTER; ticks:INTEGER)
 		external
-			"C (HMGL) | <stdbool.h>, <mgl2/mgl_cf.h>"
+			"C (HMGL, const char *, int) | <stdbool.h>, <mgl2/mgl_cf.h>"
 		alias
-			"mgl_box"
+			"mgl_box_str"
 		end
 
 	frozen mgl_axis(gr,dir,stl,opt:POINTER)
@@ -148,6 +148,41 @@ feature -- Function mgl_cf.h
 			"C (HMGL) : int | <stdbool.h>, <mgl2/mgl_cf.h>"
 		alias
 			"mgl_get_height"
+		end
+
+	frozen mgl_set_func(gr,EqX,EqY,EqZ,EqA:POINTER)
+		external
+			"C (HMGL, const char *, const char *, const char *, const char *) | <stdbool.h>, <mgl2/mgl_cf.h>"
+		alias
+			"mgl_set_func"
+		end
+
+	frozen mgl_rotate(gr:POINTER;TetX,TetZ,TetY:REAL_64)
+		external
+			"C (HMGL, mreal , mreal , mreal ) | <stdbool.h>, <mgl2/mgl_cf.h>"
+		alias
+			"mgl_rotate"
+		end
+
+	frozen mgl_label(gr:POINTER; dir:CHARACTER_8; text:POINTER; pos:REAL_64; opt:POINTER)
+		external
+			"C (HMGL, char, const char *, mreal, const char * ) | <stdbool.h>, <mgl2/mgl_cf.h>"
+		alias
+			"mgl_label"
+		end
+
+	frozen mgl_axis_grid(gr:POINTER; dir, pen, opt:POINTER)
+		external
+			"C (HMGL, const char *, const char *, const char * ) | <stdbool.h>, <mgl2/mgl_cf.h>"
+		alias
+			"mgl_axis_grid"
+		end
+
+	frozen mgl_set_ticks(gr:POINTER; dir:CHARACTER_8; d:REAL_64; ns:INTEGER; org:REAL_64)
+		external
+			"C (HMGL, char, mreal, int , mreal) | <stdbool.h>, <mgl2/mgl_cf.h>"
+		alias
+			"mgl_set_ticks"
 		end
 
 feature -- Constants mgl_cf.h

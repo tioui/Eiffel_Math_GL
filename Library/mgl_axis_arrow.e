@@ -65,7 +65,7 @@ feature -- Access
 			internal_string:="D"
 		end
 
-feature {MGL_AXIS}
+feature {MGL_AXIS_3D}
 
 	internal_string:attached STRING
 

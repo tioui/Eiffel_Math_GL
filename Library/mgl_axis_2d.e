@@ -8,16 +8,17 @@ class
 	MGL_AXIS_2D
 
 inherit
-	MGL_AXIS
+	MGL_AXIS_3D
 		rename
 			axis_order as axis_order_3d,
 			set_axis_order as set_axis_order_3d,
 			set_origin as set_origin_3d,
 			origin as origin_3d
 		export
-			{NONE} axis_order_3d, set_axis_order_3d, set_origin_3d, origin_3d
+			{NONE} 	axis_order_3d, set_axis_order_3d, draw_z_label_min, draw_z_label_max,
+					draw_z_label_center, set_origin_3d, origin_3d, draw_z_grid, set_ticks_z
 		redefine
-			make,get_axis_order_string
+			make,get_axis_order_string, draw_grid
 		end
 
 create {MGL_GRAPH_2D}
@@ -50,7 +51,12 @@ feature -- Access
 
 	set_origin(a_x,a_y:REAL_64)
 		do
-			origin_3d:=[a_x,a_y,0.0]
+			set_origin_3d(a_x,a_y,0.0)
+		end
+
+	draw_grid
+		do
+			draw_grid_imp("xy")
 		end
 
 feature {NONE} -- Implementation
